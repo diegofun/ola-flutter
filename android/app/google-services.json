@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "539463381007",
+    "project_id": "pumakani-eeafd",
+    "storage_bucket": "pumakani-eeafd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539463381007:android:263c70322b29362a41737a",
+        "android_client_info": {
+          "package_name": "com.inti.ola"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539463381007-k0l76rt5mm6d0ug86s1jgnkq16j82mju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.inti.ola",
+            "certificate_hash": "7958a2a01abbf3274399dbc482ec698caa268cc6"
+          }
+        },
+        {
+          "client_id": "539463381007-enfda4eamok1hkhr3fqmi8hh4ddjgfb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlDUs0Y_fR2HlMck1frKnOVITJEoqWrzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539463381007-enfda4eamok1hkhr3fqmi8hh4ddjgfb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
