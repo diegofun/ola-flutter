@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'ui/home.dart';
+import 'ui/profile.dart';
+import 'ui/favorites.dart';
+import 'ui/selling.dart';
+import 'ui/open_now.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -22,48 +28,59 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: HolderPage(title: 'Flutter Demo Home Page'),
+      /*routes: {
+        HomePage.routeName: (context) =>
+        HomePage(title: 'HomeOla'),
+      },*/
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
+class HolderPage extends StatefulWidget {
+  HolderPage({Key? key, required this.title}) : super(key: key);
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
-
   // This class is the configuration for the state. It holds the values (in this
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
-
   final String title;
-
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HolderPageState createState() => _HolderPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HolderPageState extends State<HolderPage> {
   bool logged = false;
-  int _currentIndex=0;
-  //List _screens=[HomePage(),SearchPage(),CategoryPage(),AccountPage()];
+  int _selectedIndex=0;
+  List _pages=[
+    HomePage(title: "Este es el home",),
+    Profile(title:"Página del perfil"),
+    Favorites(title:"Página de favoritos"),
+    Selling(title:"Página para vender")];
 
-  /*void _updateIndex(int value) {
+  void _updateIndex(int index) {
     setState(() {
-      _currentIndex = value;
-    });*/
+      _selectedIndex = index;
+    });
+  }
 
-  void _incrementCounter() {
+  void _openNow() {
     setState(() {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Ir a Abierto Ahora'),
+        duration: const Duration(seconds: 1),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
     });
   }
 
@@ -78,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          //currentIndex: _currentIndex,
-          //onTap: _updateIndex,
+          currentIndex: _selectedIndex,
+          onTap: _updateIndex,
           selectedItemColor: Colors.red,
           selectedFontSize: 13,
           unselectedFontSize: 13,
@@ -106,70 +123,15 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Container(
-        margin: new EdgeInsets.all(15.0),
-    child: new SingleChildScrollView(
-    child: Column(
-    // Column is also a layout widget. It takes a list of children and
-    // arranges them vertically. By default, it sizes itself to fit its
-    // children horizontally, and tries to be as tall as its parent.
-    //
-    // Invoke "debug painting" (press "p" in the console, choose the
-    // "Toggle Debug Paint" action from the Flutter Inspector in Android
-    // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-    // to see the wireframe for each widget.
-    //
-    // Column has various properties to control how it sizes itself and
-    // how it positions its children. Here we use mainAxisAlignment to
-    // center the children vertically; the main axis here is the vertical
-    // axis because Columns are vertical (the cross axis would be
-    // horizontal).
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-    Text(
-    'You have pushed the button this many times:',
-    ),
-    Text(
-    '$_counter',
-    style: Theme.of(context).textTheme.headline4,
-    ),
-    TextFormField(
-    cursorColor: Colors.red,
-    keyboardType: TextInputType.emailAddress,
-    decoration: new InputDecoration(
-    border: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.red, width: 5.0),
-    ),
-    contentPadding: EdgeInsets.only(
-    left: 15, bottom: 11, top: 11, right: 15),
-    hintText: "Email"),
-    ),
-    SizedBox(
-    height: 15,
-    ),
-    TextFormField(
-    cursorColor: Colors.red,
-    obscureText: true,
-    keyboardType: TextInputType.visiblePassword,
-    decoration: new InputDecoration(
-    border: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.red, width: 5.0),
-    ),
-    contentPadding: EdgeInsets.only(
-    left: 15, bottom: 11, top: 11, right: 15),
-    hintText: "Contraseña"),
-    ),
-    ],
-    ),
-    ),
-    ),
-    ),
-    floatingActionButton: FloatingActionButton(
-    onPressed: _incrementCounter,
-    tooltip: 'Increment',
-    child: Icon(Icons.add),
-    )
-    , // This trailing comma makes auto-formatting nicer for build methods.
+          child: _pages.elementAt(_selectedIndex),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _openNow,
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+
 }
