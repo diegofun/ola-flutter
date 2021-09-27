@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ola/ui/register.dart';
 import 'ui/home.dart';
 import 'ui/profile.dart';
 import 'ui/favorites.dart';
 import 'ui/selling.dart';
-import 'ui/open_now.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -47,12 +48,14 @@ class HolderPage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
   final String title;
+
   @override
   _HolderPageState createState() => _HolderPageState();
 }
 
 class _HolderPageState extends State<HolderPage> {
-  bool logged = false;
+  Map<String, String> allValues = {};
+  final _storage = FlutterSecureStorage();
   int _selectedIndex=0;
   List _pages=[
     HomePage(title: "Este es el home",),
@@ -60,13 +63,38 @@ class _HolderPageState extends State<HolderPage> {
     Favorites(title:"Página de favoritos"),
     Selling(title:"Página para vender")];
 
+  Future<Null> _readAll() async {
+    print("_readAll accessed");
+    allValues = await _storage.readAll();
+    print(allValues);
+  }
+
+  void _write(key, value) async {
+    print("to be stored, key $key, value $value");
+    await _storage.write(key: key,value: value);
+    _readAll();
+    print("stored?, key $key, value $value");
+  }
+
   void _updateIndex(int index) {
     setState(() {
-      _selectedIndex = index;
+      if (index ==1 && allValues['logged']=='false'){
+        print(allValues['logged']);
+        Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return Register(title:"Registro");
+              }),
+            );
+      } else {
+        _selectedIndex = index;
+      }
+      print('bottom bar index is ' + index.toString());
     });
   }
 
   void _openNow() {
+    _write('logged','false');
     setState(() {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Ir a Abierto Ahora'),
@@ -82,6 +110,12 @@ class _HolderPageState extends State<HolderPage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
     });
+  }
+
+  @override
+    void initState() {
+      super.initState();
+      _readAll();
   }
 
   @override

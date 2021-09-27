@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget{
-  HomePage({Key? key, required title}) : super(key: key);
+  HomePage({Key? key, required this.title}) : super(key: key);
   static const routeName = '/extractArguments';
+  final String title;
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(title);
 }
 
 class _HomePageState extends State<HomePage> {
+  _HomePageState(this.title);
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,24 +33,8 @@ class _HomePageState extends State<HomePage> {
         // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextFormField(
-              cursorColor: Colors.red,
-              keyboardType: TextInputType.emailAddress,
-              decoration: new InputDecoration(
-              border: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 5.0),),
-              contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-              hintText: "Email"
-              ),
-            ),
-            SizedBox(height: 15,),
-            TextFormField(
-              cursorColor: Colors.red,
-              obscureText: true,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: new InputDecoration(border: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 5.0),),
-              contentPadding: EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-              hintText: "Contraseña"),
-            ),
+
+            Text(title)
           ],
         ),
       ),
